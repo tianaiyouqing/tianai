@@ -6,7 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+/**
+ * 这是登陆controller
+ * <p>Title: LoginController</p>
+ * <p>Description: </p>
+ * <p>Company: www.itcast.com</p> 
+ * @author	天爱有情
+ * @date	2017年8月22日下午10:13:35
+ * @version 1.0
+ */
 @Controller
 public class LoginController {
 
