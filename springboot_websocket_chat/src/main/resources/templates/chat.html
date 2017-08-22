@@ -8,9 +8,10 @@
 	width: 100%;
 	height: 50px;
 	background: #F0F6E9;
-	resize: none;
 	border: 1px solid #C3CBD5;
 	margin-left: -2px;
+	font-size: 15px;
+	font-style: italic;
 }
 
 #sendbtn {
@@ -26,6 +27,7 @@
 	height: 100%;
 	resize: none;
 	background: #F0F6E9;
+	font-style: italic;
 }
 </style>
 
@@ -71,6 +73,7 @@
 			return false;
 		}
 		socketClient.send($area);
+		$("#sendtextarea").val("");
 	}
 	
 	function textareaclick(){
@@ -96,7 +99,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><textarea id="sendtextarea" onkeydown="javascript:if(event.keyCode==13) send();"></textarea></td>
+			<td colspan="2">
+				<input type="text" id="sendtextarea" onkeydown="javascript:if(event.keyCode==13) send();"></input>
+			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
