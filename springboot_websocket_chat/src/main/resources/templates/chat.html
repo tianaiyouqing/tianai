@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"></meta>
+<title>测试 Websocket广播模式</title>
+<style type="text/css">
+#sendtextarea {
+	width: 100%;
+	height: 50px;
+	background: #F0F6E9;
+	resize: none;
+	border: 1px solid #C3CBD5;
+	margin-left: -2px;
+}
+
+#sendbtn {
+	background: #A9D45D;
+	border-width: 0px;
+	width: 65px;
+	height: 23px;
+	margin-left: 85%;
+}
+
+#showTextArea {
+	width: 99%;
+	height: 100%;
+	resize: none;
+	background: #F0F6E9;
+}
+</style>
+
+<script th:src="@{jquery-3.1.1.min.js}"></script>
+<script th:src="@{sockjs.min.js}"></script>
+<script th:inline="javascript">
+	
+	var socketClient;
+	var username = /*[[${session.username}]]*/
+	var target = "ws://wangwang520.viphk.ngrok.org/chat?username="+username;
+	$(function(){
+		if ('WebSocket' in window) {
+			socketClient = new WebSocket(target);
+		} else if ('MozWebSocket' in window) {
+			socketClient = new MozWebSocket(target);
+		} else {
+			alert('webSocket没有打开!');
+			return;
+		}
+		
+		socketClient.onmessage = function(eveal){
+			console.log(eveal);
+			eval("var result=" + eveal.data);
+			if (result.names != undefined) {
+				$("#usercontent").html("");
+				$(result.names).each(function() {
+					$("#usercontent").append(this + "<br/>");
+				});
+			}
+			
+			if (result.msg != undefined) {
+				var tr = $("#showTextArea");
+				tr.append(result.msg);
+			}
+			
+		}
+	});
+	
+	function send(){
+		var $area = $("#sendtextarea").val();
+		if($area.trim() == ""){
+			alert("聊天信息不能为空");
+			return false;
+		}
+		socketClient.send($area);
+	}
+	
+	function textareaclick(){
+		this.scrollTop = this.scrollHeight;
+	}
+</script>
+</head>
+<body>
+	<table
+		style="width: 500px; height: 500px; border: 3px solid #C3CBD5; margin: 0 auto;">
+		<tr>
+			<td>
+				<div id="usercontent"
+					style="width: 100px; height: 400px; margin-left: 5px; margin-top: 0px; background-color: #A9D45D;"></div>
+			</td>
+			<td>
+				<div style="width: 400px; height: 400px; background-color: #F0F6E9;">
+					<textarea id="showTextArea" readonly="readonly"
+						onchange="this.scrollTop = this.scrollHeight "
+						onfocus="this.scrollTop = this.scrollHeight "
+						></textarea>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><textarea id="sendtextarea"></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button id="sendbtn" onclick="send();">发送</button>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

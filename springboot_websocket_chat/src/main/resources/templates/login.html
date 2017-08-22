@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title></title>
+<style type="text/css">
+#loginDiv {
+	border-width: 2px;
+	border-color: #A9D45D;
+	border-style: double;
+	width: 60%;
+	height: 500px;
+	background-color: cornflowerblue;
+	margin: 0 auto;
+}
+
+.usercss {
+	text-align: center;
+	margin-top: 80px;
+}
+
+#userText {
+	width: 60%;
+	height: 30px;
+	background-color: #E0E3DC;
+}
+
+#usersubmit {
+	height: 38px;
+	width: 20%;
+}
+
+.usertitle {
+	text-align: center;
+	color: aliceblue;
+}
+
+body {
+	background-color: #A9D45D;
+}
+</style>
+</head>
+
+<body>
+	<div id="loginDiv">
+		<h2 class="usertitle">聊天室登陆界面</h2>
+		<h3 class="usertitle" th:text="${errormsg}"></h3>
+		<form class="usercss" th:action="@{/login}" method="post">
+			<input type="text" id="userText" name="username" /> <input
+				type="submit" id="usersubmit" value="登陆" />
+		</form>
+
+	</div>
+</body>
+
+</html>
